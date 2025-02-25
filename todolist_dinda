@@ -1,0 +1,27 @@
+<form method="POST" action="todo/tambah_todolist..php">
+<div class="modal-body">
+<div class="mb-3">
+  <label class="from-label text-body">list tugas</label>
+  <input type="text" class="form-control" placeholder="nama list" name="tugas">
+  </div>
+  <div class="mb-3">
+  <label class="form-label text-body">deadline</label>
+  <input type="date"class="form-control" name="jangkawaktu">
+</div>
+<div class="mb-3">
+  <combo label class="from-label text-body">informasi</label>
+  <select class="form-control" name="keterangan">
+    <option> Belum Selesai</option>
+    <option> Selesai </option>
+</select>
+</div>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">kembali</button>
+<button type="button" class="btn btn-primary"> "modal"> Simpan</button>
+</div>
+</from>
+
+</div>
+</div>
+</div>

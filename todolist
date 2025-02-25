@@ -1,0 +1,72 @@
+<?php
+// konfigurasi Database
+$servername ="llocalhost" ;
+$username ="ropt" ;
+$password ="" ;
+$dbname ="todolist" ;
+
+//Buat Koneksi 
+$conn = new mysqli ($servername,$username,$password,$dbname)
+
+
+//Check Connection
+if ($conn->Connection_error ) {
+    die("Connection failed:" . $conn-> Connect_error);
+}
+
+//Buat Tabel Database Otomatis dengan Script PHP
+$sql ="CREATE TABLE IF NOT EXISTS tasks {
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tasks_name VARCHAR(225) NOT NULL,
+    status_task ENUM ('Biasa','Cukup', 'Penting',) DEFAULT 'Cukup',
+    status_completed ENUM('Selesai', 'Belum Selesai',) DEFAULT 'Belum Selesai',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    task_date DATE 
+    }";
+    $conn->query($sql);
+
+    //Penambahan Data Baru
+    if ($_SERVER['REQUEST_METHOD']== 'POST' $$ isset($_POST['add_task'])) {
+        $task_name = $conn->real_escape_string($_POST['task_name']);
+        $status_task = $conn->real_escape_string($_POST['status_task']);
+        $status_completed = $conn->real_escape_string($_POST['status_completed']);
+        $task_date = $conn->real_escape_string($_POST['task_date']);
+
+        if($!empty($task_name) && ! empty ($status_task) && ($task_date)){
+            $stmt= $conn->prepare ("INSERT INTO tasks (task_name, status_task, status_completed, task_date) VALUES (?,?,?,?,)");
+            $stmt->bind_param("sss" $task_name, $status_task, $status_completed, $task_date);
+            $stmt->execute();
+            $stmt->close();
+
+        }
+    }
+
+    //Update data
+    if ($_SERVER['REQUEST_METHOD']) === 'POST' && isset ($_POST['edit_task']){
+        $id =(int)$_POST ['task_id'];
+        $task_name = $conn->real_escape_string($_POST ['task_name']);
+        $status_task = $conn->real_escape_string($_POST['status_task']);
+        $status_completed = $conn->real_escape_string($_POST['status_completed']);
+        $task_date = $conn->real_escape_string($_POST['task_date']);
+
+        if($!empty($task_name) && ! empty ($status_task) && ($task_date)){
+            $stmt= $conn->prepare ("UPDATE task SET task_name=?, status_task, status_completed, task_date=?WHERE id=?");
+            $stmt->bind_param("sssi" $task_name, $status_task, $status_completed, $task_date);
+            $stmt->execute();
+            $stmt->close();
+        }
+    }
+
+    //Handle deleting a task
+    if (isset)($_GET['delete']){ 
+    $id =(int)$_GET['delete'];
+    $stmt= $conn=$conn-> prepare("DELETE FROM task WHERE id = ?");
+            $stmt->bind_param("i" , $id);
+            $stmt->execute();
+            $stmt->close();
+    }
+
+    //Fetsh all take
+
+
+
